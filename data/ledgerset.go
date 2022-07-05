@@ -75,7 +75,7 @@ func (l *LedgerSet) Set(i uint32) time.Duration {
 	if when, ok := l.taken[i]; ok {
 		delete(l.taken, i)
 		l.returned++
-		duration := time.Now().Sub(when)
+		duration := time.Since(when)
 		l.duration += duration
 		return duration
 	}
@@ -87,7 +87,7 @@ func (l *LedgerSet) take(i uint32) bool {
 		return false
 	}
 	when, ok := l.taken[i]
-	if !ok || (ok && time.Now().Sub(when).Seconds() > 90) {
+	if !ok || (ok && time.Since(when).Seconds() > 90) {
 		l.taken[i] = time.Now()
 		return true
 	}

@@ -100,7 +100,7 @@ func (s ActionSlice) Submit(host string) error {
 
 func (s ActionSlice) Count() int {
 	var count int
-	s.each(func(seed data.Seed, fee data.Value, keyType data.KeyType, tx data.Transaction, txType data.TransactionType) error {
+	_ = s.each(func(seed data.Seed, fee data.Value, keyType data.KeyType, tx data.Transaction, txType data.TransactionType) error {
 		count++
 		return nil
 	})

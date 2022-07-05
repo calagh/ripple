@@ -12,25 +12,19 @@ import (
 )
 
 const (
-	minOffset        int64  = -96
-	maxOffset        int64  = 80
-	minValue         uint64 = 1000000000000000
-	maxValue         uint64 = 9999999999999999
-	maxNative        uint64 = 9000000000000000000
-	maxNativeNetwork uint64 = 100000000000000000
-	notNative        uint64 = 0x8000000000000000
-	positive         uint64 = 0x4000000000000000
-	maxNativeSqrt    uint64 = 3000000000
-	maxNativeDiv     uint64 = 2095475792 // MaxNative / 2^32
-	tenTo14          uint64 = 100000000000000
-	tenTo14m1        uint64 = tenTo14 - 1
-	tenTo17          uint64 = tenTo14 * 1000
-	tenTo17m1        uint64 = tenTo17 - 1
-	xrpPrecision     uint64 = 1000000
+	minOffset     int64  = -96
+	maxOffset     int64  = 80
+	minValue      uint64 = 1000000000000000
+	maxValue      uint64 = 9999999999999999
+	maxNative     uint64 = 9000000000000000000
+	maxNativeSqrt uint64 = 3000000000
+	maxNativeDiv  uint64 = 2095475792 // MaxNative / 2^32
+	tenTo14       uint64 = 100000000000000
+	tenTo17       uint64 = tenTo14 * 1000
+	xrpPrecision  uint64 = 1000000
 )
 
 var (
-	bigTen        = big.NewInt(10)
 	bigTenTo14    = big.NewInt(0).SetUint64(tenTo14)
 	bigTenTo17    = big.NewInt(0).SetUint64(tenTo17)
 	zeroNative    = *newValue(true, false, 0, 0)
@@ -96,7 +90,7 @@ func NewNonNativeValue(n int64, offset int64) (*Value, error) {
 // 5 = whole exponent (with 'e')
 // 6 = exponent sign
 // 7 = exponent number
-var valueRegex = regexp.MustCompile("([+-]?)(\\d*)(\\.(\\d*))?([eE]([+-]?)(\\d+))?")
+var valueRegex = regexp.MustCompile(`([+-]?)(\d*)(\.(\d*))?([eE]([+-]?)(\d+))?`)
 
 // NewValue accepts a string representation of a value and a flag to indicate if it
 // should be stored as native. If the native flag is set AND a decimal is used, the

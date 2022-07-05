@@ -38,7 +38,7 @@ func (n InnerNode) Each(f InnerNodeFunc) error {
 
 func (n InnerNode) Count() int {
 	var count int
-	n.Each(func(i int, child Hash256) error {
+	_ = n.Each(func(i int, child Hash256) error {
 		count++
 		return nil
 	})
@@ -47,7 +47,7 @@ func (n InnerNode) Count() int {
 
 func (n InnerNode) String() string {
 	var s []string
-	n.Each(func(i int, child Hash256) error {
+	_ = n.Each(func(i int, child Hash256) error {
 		s = append(s, child.String())
 		return nil
 	})

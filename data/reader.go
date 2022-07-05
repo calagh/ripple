@@ -52,7 +52,7 @@ func (l *LimitByteReader) ReadByte() (c byte, err error) {
 }
 
 func (l *LimitByteReader) UnreadByte() error {
-	if err := l.UnreadByte(); err != nil {
+	if err := l.R.UnreadByte(); err != nil {
 		return err
 	}
 	l.N++

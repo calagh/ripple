@@ -33,9 +33,9 @@ func decodeHex(s string, t *testing.T) []byte {
 	return h
 }
 
-// func TestTxHashes(t *testing.T) {
-// 	for _, test := range txHashTests {
-// 		tx := decodeHex(test.Tx, t)
-// 		t.Log(tx)
-// 	}
-// }
+func TestTxHashes(t *testing.T) {
+	for _, test := range txHashTests {
+		tx := decodeHex(test.Tx, t)
+		t.Log(tx)
+	}
+}

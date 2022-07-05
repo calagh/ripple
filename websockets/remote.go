@@ -19,9 +19,6 @@ import (
 )
 
 const (
-	// Time allowed to write a message to the peer.
-	writeWait = 10 * time.Second
-
 	// Time allowed to read the next pong message from the peer.
 	pongWait = 60 * time.Second
 
@@ -535,8 +532,11 @@ func (r *Remote) Fee() (*FeeResult, error) {
 // readPump reads from the websocket and sends to inbound channel.
 // Expects to receive PONGs at specified interval, or logs an error and returns.
 func (r *Remote) readPump(inbound chan<- []byte) {
-	r.ws.SetReadDeadline(time.Now().Add(pongWait))
-	r.ws.SetPongHandler(func(string) error { r.ws.SetReadDeadline(time.Now().Add(pongWait)); return nil })
+	if err := r.ws.SetReadDeadline(time.Now().Add(pongWait)); err != nil {
+		glog.Errorln(err)
+		return
+	}
+	r.ws.SetPongHandler(func(string) error { return r.ws.SetReadDeadline(time.Now().Add(pongWait)) })
 	for {
 		_, message, err := r.ws.ReadMessage()
 		if err != nil {
@@ -546,7 +546,10 @@ func (r *Remote) readPump(inbound chan<- []byte) {
 		if glog.V(2) {
 			glog.Infoln(dump(message))
 		}
-		r.ws.SetReadDeadline(time.Now().Add(pongWait))
+		if err := r.ws.SetReadDeadline(time.Now().Add(pongWait)); err != nil {
+			glog.Errorln(err)
+			return
+		}
 		inbound <- message
 	}
 }

@@ -40,7 +40,6 @@ type Seed [16]byte
 var zero256 Hash256
 var zeroAccount Account
 var zeroPublicKey PublicKey
-var zeroSeed Seed
 
 func (h *Hash128) Bytes() []byte {
 	if h == nil {

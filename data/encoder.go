@@ -222,7 +222,7 @@ func (s fieldSlice) Each(f func(e enc, v interface{}) error) error {
 
 func (f fieldSlice) String() string {
 	var s []string
-	f.Each(func(e enc, v interface{}) error {
+	_ = f.Each(func(e enc, v interface{}) error {
 		s = append(s, fmt.Sprintf("%s:%d:%d:%v", encodings[e], e.typ, e.field, v))
 		return nil
 	})
